@@ -13,6 +13,7 @@ public class Row {
     public List<Double> getData(){
         return data;
     }
+    
 
     public void add(Double number){
         data.add(number);
