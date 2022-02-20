@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 public class CSV {
 
-    public Table readTable(String fileName) throws FileNotFoundException {
+    public static Table readTable(String fileName) throws FileNotFoundException {
         Table t = new Table();
         Scanner sc = new Scanner(new File(fileName));
 

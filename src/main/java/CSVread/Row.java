@@ -22,7 +22,7 @@ public class Row {
 
     @Override
     public String toString() {
-        String ret = new String();
+        String ret = "";
         for(int i = 0; i < data.size(); i++) {
             ret += data.get(i);
             ret += "\t\t";

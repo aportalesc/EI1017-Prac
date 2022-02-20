@@ -1,7 +1,10 @@
 package CSVread;
 
+import java.io.FileNotFoundException;
+import java.util.List;
+
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException {
 
 
         Row fila = new Row();
@@ -17,6 +20,14 @@ public class Main {
         tabla.add(fila);
         tabla.add(fila2);
         System.out.println(tabla);
+
+       List<Double> col = tabla.getColumnAt(1);
+       System.out.println(col);
+
+       Table t = CSV.readTable("src/main/resources/prueba.csv");
+
+        System.out.println(t);
+
 
 
     }
