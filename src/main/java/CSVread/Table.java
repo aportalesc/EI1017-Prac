@@ -3,9 +3,9 @@ package CSVread;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Table {
+public class Table implements TableInterface{
 
-    private List<String> headers;
+    protected List<String> headers;
 
     public Table() {
         super();
@@ -14,6 +14,10 @@ public class Table {
 
     public Row getRowAt(int rowNumber){
         return stringToRow(headers.get(rowNumber));
+    }
+
+    public int numberOfColumns() {
+        return stringToRow(headers.get(1)).getData().size();
     }
 
     public List<Double> getColumnAt(int columnNumber){
@@ -38,10 +42,19 @@ public class Table {
         headers.add(str);
     }
 
+    public int getSize(){
+        return headers.size();
+    }
     @Override
     public String toString() {
        String ret = "";
-       for(int i = 0; i < headers.size(); i++){
+       String [] etiq = headers.get(0).split(",");
+       for(String elem : etiq){
+           ret += elem;
+           ret += "\t\t";
+       }
+       ret += "\n";
+       for(int i = 1; i < headers.size(); i++){
            String[] aux = headers.get(i).split(",");
            for(String elem : aux){
                ret += elem;

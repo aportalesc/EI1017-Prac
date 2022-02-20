@@ -10,7 +10,18 @@ public class CSV {
         Scanner sc = new Scanner(new File(fileName));
 
         while(sc.hasNextLine())
-            t.add(sc.next());
+            t.add(sc.nextLine());
+
+        sc.close();
+        return t;
+    }
+
+    public static TableWithLabels readTableWithLabels(String fileName) throws FileNotFoundException {
+        TableWithLabels t = new TableWithLabels();
+        Scanner sc = new Scanner(new File(fileName));
+
+        while(sc.hasNextLine())
+            t.add(sc.nextLine());
 
         sc.close();
         return t;

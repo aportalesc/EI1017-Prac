@@ -24,10 +24,11 @@ public class Main {
        //List<Double> col = tabla.getColumnAt(2);
        //System.out.println(col);
 
-       //Table t = CSV.readTable("src/main/resources/miles_dollars.csv");
+       Table t = CSV.readTable("src/main/resources/iris.csv");
 
-       //System.out.println(t);
+       System.out.println(t);
 
+        /*
         RowWithLabel f = new RowWithLabel("iris-setosa");
         f.add(1.0);
         f.add(2.0);
@@ -38,6 +39,18 @@ public class Main {
         f2.add(6.0);
         System.out.println(f);
         System.out.println(f2);
+        System.out.println(f.getData());
+        System.out.println(f.getLabel());
 
+        TableWithLabels t = new TableWithLabels();
+        t.add("1,2,3,4,sedoso");
+        t.add(("5,6,7,8,belmont"));
+
+        RowWithLabel filaa = t.getRowAt(1);
+        System.out.println(filaa);
+        System.out.println(filaa.getLabel());
+        System.out.println(filaa.data);
+
+         */
     }
 }

@@ -3,14 +3,12 @@ package CSVread;
 import java.util.LinkedList;
 import java.util.List;
 
-public class RowWithLabel extends Row{
+public class RowWithLabel extends Row implements RowInterface{
 
-    private List<Double> data;
     private String label;
 
     RowWithLabel(String label){
         super();
-        data = new LinkedList<>();
         this.label = label;
     }
 

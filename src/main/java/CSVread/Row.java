@@ -3,9 +3,9 @@ package CSVread;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Row {
+public class Row implements RowInterface{
 
-    private List<Double> data;
+    protected List<Double> data;
 
     public Row(){
         super();
