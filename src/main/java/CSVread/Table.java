@@ -18,14 +18,14 @@ public class Table {
 
     public List<Double> getColumnAt(int columnNumber){
         List<Double> ret = new LinkedList<>();
-        for(int i = 0; i < headers.size(); i++){
+        for(int i = 1; i < headers.size(); i++){
             Row r = stringToRow(headers.get(i));
             ret.add(r.getData().get(columnNumber));
         }
         return ret;
     }
 
-    public Row stringToRow(String str){
+    private Row stringToRow(String str){
         Row ret = new Row();
         String[] aux = str.split(",");
         for(String elem : aux)
