@@ -17,16 +17,16 @@ public class Main {
         fila2.add(6.0);
 
         Table tabla = new Table();
-        tabla.add(fila);
-        tabla.add(fila2);
-        System.out.println(tabla);
+        tabla.add("1.0,2.0,3.0");
+        tabla.add("4.0,5.0,6.0");
+        //System.out.println(tabla);
 
-       List<Double> col = tabla.getColumnAt(1);
-       System.out.println(col);
+       List<Double> col = tabla.getColumnAt(2);
+       //System.out.println(col);
 
-       Table t = CSV.readTable("src/main/resources/prueba.csv");
+       Table t = CSV.readTable("src/main/resources/miles_dollars.csv");
 
-        System.out.println(t);
+       System.out.println(t);
 
 
 

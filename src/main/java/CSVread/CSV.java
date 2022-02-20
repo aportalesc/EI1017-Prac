@@ -9,13 +9,8 @@ public class CSV {
         Table t = new Table();
         Scanner sc = new Scanner(new File(fileName));
 
-        while(sc.hasNextLine()){
-            Row r = new Row();
-            String[] str = sc.next().split(",");
-            for(String elem : str)
-                r.add(Double.parseDouble(elem));
-            t.add(r);
-        }
+        while(sc.hasNextLine())
+            t.add(sc.next());
 
         sc.close();
         return t;
