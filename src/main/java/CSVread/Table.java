@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Table {
 
-    private List<Row> headers;
+    private List<String> headers;
 
     public Table() {
         super();
@@ -13,26 +13,42 @@ public class Table {
     }
 
     public Row getRowAt(int rowNumber){
-        return headers.get(rowNumber);
+        return stringToRow(headers.get(rowNumber));
     }
 
     public List<Double> getColumnAt(int columnNumber){
         List<Double> ret = new LinkedList<>();
-        for(Row r : headers)
+        for(int i = 0; i < headers.size(); i++){
+            Row r = stringToRow(headers.get(i));
             ret.add(r.getData().get(columnNumber));
+        }
         return ret;
     }
 
-    public void add(Row r){
-        headers.add(r);
+    public Row stringToRow(String str){
+        Row ret = new Row();
+        String[] aux = str.split(",");
+        for(String elem : aux)
+            ret.add(Double.parseDouble(elem));
+
+        return ret;
+    }
+
+    public void add(String str){
+        headers.add(str);
     }
 
     @Override
     public String toString() {
        String ret = "";
        for(int i = 0; i < headers.size(); i++){
-           ret += headers.get(i);
-           ret += '\n';
+           String[] aux = headers.get(i).split(",");
+           for(String elem : aux){
+               ret += elem;
+               ret += "\t\t";
+           }
+           if(i != headers.size() - 1)
+               ret += '\n';
        }
        return ret;
     }
