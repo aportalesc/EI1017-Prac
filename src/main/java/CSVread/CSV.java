@@ -1,6 +1,4 @@
 package CSVread;
-//ALELUYA- The Messiah (Händel)
-//viva willyrex
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;

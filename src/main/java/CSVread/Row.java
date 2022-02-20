@@ -1,13 +1,15 @@
 package CSVread;
 
+import java.util.LinkedList;
 import java.util.List;
 
 public class Row {
 
-    List<Double> data;
+    private List<Double> data;
 
     public Row(){
         super();
+        data = new LinkedList<>();
     }
 
     public List<Double> getData(){
@@ -18,4 +20,13 @@ public class Row {
         data.add(number);
     }
 
+    @Override
+    public String toString() {
+        String ret = new String();
+        for(int i = 0; i < data.size(); i++) {
+            ret += data.get(i);
+            ret += "\t\t";
+        }
+        return ret;
+    }
 }
