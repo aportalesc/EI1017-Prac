@@ -33,7 +33,6 @@ public class CSV {
             t.addHeader(elem);
 
         while(sc.hasNextLine()){
-
             String[] str = sc.next().split(",");
             RowWithLabel r = new RowWithLabel(str[str.length - 1]);
             for(int i = 0; i < str.length - 1; i++)
