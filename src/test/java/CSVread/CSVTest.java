@@ -13,7 +13,7 @@ class CSVTest {
     void readTable() throws FileNotFoundException {
         Table t = CSV.readTable("src/main/resources/miles_dollars.csv");
         System.out.println("Comprobamos el número de filas de miles_dollars.csv");
-        assertEquals(26, t.getSize());
+        assertEquals(25, t.getSize());
         System.out.println("Comprobamos el número de columnas de miles_dollars.csv");
         assertEquals(2, t.numberOfColumns());
 
@@ -24,7 +24,7 @@ class CSVTest {
     void readTableWithLabels() throws FileNotFoundException {
         Table t = CSV.readTableWithLabels("src/main/resources/iris.csv");
         System.out.println("Comprobamos el número de filas de iris.csv");
-        assertEquals(151, t.getSize());
+        assertEquals(150, t.getSize());
         System.out.println("Comprobamos el número de columnas de iris.csv");
         assertEquals(4, t.numberOfColumns());
     }

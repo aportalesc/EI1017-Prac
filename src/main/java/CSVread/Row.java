@@ -3,7 +3,7 @@ package CSVread;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Row implements RowInterface{
+public class Row {
 
     protected List<Double> data;
 

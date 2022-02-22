@@ -3,7 +3,7 @@ package CSVread;
 import java.util.LinkedList;
 import java.util.List;
 
-public class RowWithLabel extends Row implements RowInterface{
+public class RowWithLabel extends Row {
 
     private String label;
 

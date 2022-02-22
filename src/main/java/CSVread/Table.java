@@ -1,68 +1,58 @@
 package CSVread;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Table implements TableInterface{
+public class Table{
 
     protected List<String> headers;
+    protected List<Row> data;
 
     public Table() {
         super();
-        headers = new LinkedList<>();
+        headers = new ArrayList<>();
+        data = new ArrayList<>();
     }
 
     public Row getRowAt(int rowNumber){
-        return stringToRow(headers.get(rowNumber));
+        return data.get(rowNumber);
     }
 
     public int numberOfColumns() {
-        return stringToRow(headers.get(1)).getData().size();
+        return data.get(0).getData().size();
     }
 
     public List<Double> getColumnAt(int columnNumber){
         List<Double> ret = new LinkedList<>();
-        for(int i = 1; i < headers.size(); i++){
-            Row r = stringToRow(headers.get(i));
+        for(Row r : data)
             ret.add(r.getData().get(columnNumber));
-        }
         return ret;
     }
 
-    private Row stringToRow(String str){
-        Row ret = new Row();
-        String[] aux = str.split(",");
-        for(String elem : aux)
-            ret.add(Double.parseDouble(elem));
-
-        return ret;
+    public void add(Row r){
+        data.add(r);
     }
 
-    public void add(String str){
-        headers.add(str);
+    public void addHeader(String s){
+        headers.add(s);
     }
 
     public int getSize(){
-        return headers.size();
+        return data.size();
     }
     @Override
     public String toString() {
-       String ret = "";
-       String [] etiq = headers.get(0).split(",");
-       for(String elem : etiq){
-           ret += elem;
-           ret += "\t\t";
-       }
-       ret += "\n";
-       for(int i = 1; i < headers.size(); i++){
-           String[] aux = headers.get(i).split(",");
-           for(String elem : aux){
-               ret += elem;
-               ret += "\t\t";
-           }
-           if(i != headers.size() - 1)
-               ret += '\n';
-       }
-       return ret;
+        String ret = "";
+        for(String elem : headers){
+            ret += elem;
+            ret += "\t\t";
+        }
+        ret += "\n";
+        for(int i = 0; i < data.size(); i++){
+            ret += data.get(i);
+            ret += '\n';
+        }
+        return ret;
     }
 }
