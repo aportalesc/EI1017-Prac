@@ -24,7 +24,7 @@ public class Table{
     }
 
     public List<Double> getColumnAt(int columnNumber){
-        List<Double> ret = new LinkedList<>();
+        List<Double> ret = new ArrayList<>();
         for(Row r : data)
             ret.add(r.getData().get(columnNumber));
         return ret;
