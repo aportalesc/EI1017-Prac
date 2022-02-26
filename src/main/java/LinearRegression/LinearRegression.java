@@ -8,9 +8,19 @@ import java.util.List;
 
 public class LinearRegression {
 
-    public void train(Table data){
+    private double alpha, beta;
 
-        
+    LinearRegression(){
+        super();
+    }
+
+    public void train(Table data){
+        alpha = alphaCalc(data);
+        beta = betaCalc(data, alpha);
+    }
+
+    public Double estimate(Double sample){
+        return alpha * sample + beta;
     }
 
     private Double alphaCalc(Table t){
@@ -31,4 +41,12 @@ public class LinearRegression {
     private Double betaCalc(Table t, Double alpha){
         return Statistics.mediaAritmetica(t.getColumnAt(1)) - alpha * Statistics.mediaAritmetica(t.getColumnAt(0));
     }
+
+    public Double getAlpha(){
+       return alpha;
+    }
+    public Double getBeta(){
+        return beta;
+    }
+
 }
