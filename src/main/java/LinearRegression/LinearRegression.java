@@ -2,8 +2,6 @@ package LinearRegression;
 
 import CSVread.Table;
 import Statistics.Statistics;
-
-import java.util.Collection;
 import java.util.List;
 
 public class LinearRegression {
