@@ -20,6 +20,10 @@ public class Row {
         data.add(number);
     }
 
+    public int size(){
+        return data.size();
+    }
+
     @Override
     public String toString() {
         String ret = "";

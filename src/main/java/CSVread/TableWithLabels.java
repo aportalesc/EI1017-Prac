@@ -1,5 +1,7 @@
 package CSVread;
 
+import java.util.List;
+
 public class TableWithLabels extends Table{
 
 

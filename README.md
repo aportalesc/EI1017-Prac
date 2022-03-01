@@ -1,3 +1,4 @@
 # EI1017-Prac1
- 
- De momento hay que hacer el apartado 1 que trata sobre leer ficheros CSV
+ - Completado:
+ + Todas la clases de CSVRead
+ + La clase Algorithms

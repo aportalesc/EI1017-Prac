@@ -1,10 +1,10 @@
-package LinearRegression;
+package Algorithms;
 
 import CSVread.Table;
 import Statistics.Statistics;
 import java.util.List;
 
-public class LinearRegression {
+public class LinearRegression{
 
     private double alpha, beta;
 

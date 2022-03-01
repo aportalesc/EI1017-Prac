@@ -1,4 +1,4 @@
-package LinearRegression;
+package Algorithms;
 
 import CSVread.CSV;
 import CSVread.Table;

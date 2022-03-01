@@ -41,6 +41,7 @@ public class Table{
     public int getSize(){
         return data.size();
     }
+
     @Override
     public String toString() {
         String ret = "";
