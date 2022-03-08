@@ -1,14 +1,10 @@
 package CSVread;
 
-import java.util.List;
-
 public class TableWithLabels extends Table{
 
-
-    TableWithLabels(){
+    public TableWithLabels(){
         super();
     }
-
 
     @Override
     public RowWithLabel getRowAt(int rowNumber) {
@@ -28,7 +24,6 @@ public class TableWithLabels extends Table{
         ret += "\n";
         for(int i = 0; i < data.size(); i++){
             ret += data.get(i);
-            //ret += ' ' + data.get(i).getLabel();
             ret += '\n';
         }
         return ret;

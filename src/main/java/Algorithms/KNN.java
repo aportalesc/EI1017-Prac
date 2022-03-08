@@ -1,10 +1,11 @@
 package Algorithms;
 
 import CSVread.TableWithLabels;
+import Exceptions.EmptyTableException;
 
 import java.util.List;
 
-public class KNN {
+public class KNN implements Algorithm<TableWithLabels, String, List<Double>>{
 
     private TableWithLabels data;
 
@@ -12,7 +13,10 @@ public class KNN {
         super();
     }
 
-    public void train(TableWithLabels data){
+    public void train(TableWithLabels data) throws EmptyTableException {
+        if(data.getSize() == 0)
+            throw new EmptyTableException();
+
         this.data = data;
     }
 

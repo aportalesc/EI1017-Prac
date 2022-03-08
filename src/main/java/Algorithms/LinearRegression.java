@@ -1,10 +1,12 @@
 package Algorithms;
 
 import CSVread.Table;
+import Exceptions.EmptyTableException;
+import Exceptions.ZeroDivisionException;
 import Statistics.Statistics;
 import java.util.List;
 
-public class LinearRegression{
+public class LinearRegression implements Algorithm<Table, Double, Double>{
 
     private double alpha, beta;
 
@@ -12,7 +14,10 @@ public class LinearRegression{
         super();
     }
 
-    public void train(Table data){
+    public void train(Table data) throws ZeroDivisionException, EmptyTableException {
+        if(data.getSize() == 0)
+            throw new EmptyTableException();
+
         alpha = alphaCalc(data);
         beta = betaCalc(data, alpha);
     }
@@ -21,7 +26,7 @@ public class LinearRegression{
         return alpha * sample + beta;
     }
 
-    private Double alphaCalc(Table t){
+    private Double alphaCalc(Table t) throws ZeroDivisionException {
         List<Double> x = t.getColumnAt(0);
         List<Double> y = t.getColumnAt(1);
         Double xmean = Statistics.mediaAritmetica(x);
@@ -33,6 +38,8 @@ public class LinearRegression{
             num += (x.get(i) - xmean) * (y.get(i) - ymean);
             denom += Math.pow(x.get(i) - xmean, 2);
         }
+        if(denom == 0.0)
+            throw new ZeroDivisionException();
         return num / denom;
     }
 

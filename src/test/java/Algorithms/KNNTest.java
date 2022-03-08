@@ -2,6 +2,7 @@ package Algorithms;
 
 import CSVread.CSV;
 import CSVread.TableWithLabels;
+import Exceptions.EmptyTableException;
 import org.junit.jupiter.api.Test;
 
 import java.io.FileNotFoundException;
@@ -13,10 +14,11 @@ import static org.junit.jupiter.api.Assertions.*;
 class KNNTest {
 
     @Test
-    void estimate() throws FileNotFoundException {
+    void estimate() throws FileNotFoundException, EmptyTableException {
         TableWithLabels t = CSV.readTableWithLabels("src/main/resources/iris.csv");
-
+        TableWithLabels t2 = new TableWithLabels();
         KNN k = new KNN();
+        KNN k2 = new KNN();
         k.train(t);
         List<Double> l = new ArrayList<>();
         l.add(5.8);
@@ -37,5 +39,6 @@ class KNNTest {
         assertEquals("Iris-setosa",k.estimate(l));
         assertEquals("Iris-versicolor",k.estimate(l2));
         assertEquals("Iris-virginica",k.estimate(l3));
+        assertThrows(EmptyTableException.class, () -> k2.train(t2));
     }
 }

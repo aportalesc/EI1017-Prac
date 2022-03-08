@@ -17,8 +17,9 @@ public class Main {
         fila2.add(6.0);
 
         Table tabla = new Table();
-        tabla.add(fila);
-        tabla.add(fila2);
+        System.out.println(tabla.getSize());
+        //tabla.add(fila);
+        //tabla.add(fila2);
         //System.out.println(tabla);
 
        //List<Double> col = tabla.getColumnAt(2);
@@ -73,6 +74,6 @@ public class Main {
 
          */
         TableWithLabels tl = CSV.readTableWithLabels("src/main/resources/iris.csv");
-        System.out.println(tl);
+        //System.out.println(tl);
     }
 }
