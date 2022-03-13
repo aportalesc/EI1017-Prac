@@ -22,12 +22,13 @@ class LinearRegressionTest {
     }
 
     @Test
-    void train(){
+    void train() throws FileNotFoundException {
         Table t2 = new Table();
+        Table t3 = CSV.readTable("src/main/resources/miles_dollars2.csv");
         assertEquals(1.255, recta.getAlpha(), 0.001);
         assertEquals(274.85, recta.getBeta(), 0.01);
         assertThrows(EmptyTableException.class, () -> recta.train(t2));
-        assertThrows(ZeroDivisionException.class, () -> recta.train(t2));
+        assertThrows(ZeroDivisionException.class, () -> recta.train(t3));
     }
 
     @Test
