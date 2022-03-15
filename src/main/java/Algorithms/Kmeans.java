@@ -2,6 +2,7 @@ package Algorithms;
 
 import CSVread.Row;
 import CSVread.Table;
+import Statistics.Statistics;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -24,28 +25,24 @@ public class Kmeans {
 
     public void train(Table data){
         List<List<Row>> clusters = new ArrayList<>();
-        for(int i = 0; i < numberClusters; i++) {
+        for(int i = 0; i < numberClusters; i++) {       //Inicializa los centroides de cada cluster
             centr.add(data.getRowAt(i));
             clusters.add(new LinkedList<>());
         }
 
         for(int n = 0; n < iterations; n++){
-
-            for(int i = 0; i < data.getSize(); i++){
+            for(int i = 0; i < data.getSize(); i++){    //Asigna cada elemento al cluster más cercano
                 Row elem = data.getRowAt(i);
                 int ncluster = closestCluster(elem);
                 clusters.get(ncluster).add(elem);
             }
 
-
-
-
-
-
-
+            for(int i = 0; i < clusters.size(); i++){   //Calcula el centroide de cada grupo
+                List<Row> cl = clusters.get(i);
+                centr.set(i, centrCalc(cl));
+            }
+            clusters.clear();                           // Vacía los grupos para volver a calcularlos
         }
-
-
     }
 
     private double euclideanDist(Row r1, Row r2) {
@@ -68,6 +65,22 @@ public class Kmeans {
             }
         }
         return ncluster;
+    }
+
+    private Row centrCalc(List<Row> cluster){
+        Row ret = new Row();
+        for(int i = 0; i < cluster.get(0).size(); i++){
+            double mean = Statistics.mediaAritmetica(getColumnAt(i, cluster));
+            ret.add(mean);
+            }
+        return ret;
+    }
+
+    private List<Double> getColumnAt(int columnNumber, List<Row> cluster){
+        List<Double> ret = new ArrayList<>();
+        for(Row r : cluster)
+            ret.add(r.getData().get(columnNumber));
+        return ret;
     }
 
 }
