@@ -7,7 +7,7 @@ public class RowWithLabel extends Row {
 
     private String label;
 
-    RowWithLabel(String label){
+    public RowWithLabel(String label){
         super();
         this.label = label;
     }

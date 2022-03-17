@@ -1,6 +1,7 @@
 package Algorithms;
 
 import CSVread.Row;
+import CSVread.RowWithLabel;
 import CSVread.Table;
 import Statistics.Statistics;
 
@@ -8,7 +9,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Kmeans {
+public class Kmeans implements Algorithm<Table, String, Row>{
 
     private int numberClusters;
     private int iterations;
@@ -43,6 +44,10 @@ public class Kmeans {
             }
             clusters.clear();                           // Vacía los grupos para volver a calcularlos
         }
+    }
+
+    public String estimate(Row r){
+        return "cluster-" + closestCluster(r);
     }
 
     private double euclideanDist(Row r1, Row r2) {
