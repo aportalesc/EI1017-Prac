@@ -1,7 +1,6 @@
 package Algorithms;
 
 import CSVread.Row;
-import CSVread.RowWithLabel;
 import CSVread.Table;
 import Statistics.Statistics;
 
