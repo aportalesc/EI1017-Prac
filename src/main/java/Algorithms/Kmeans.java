@@ -40,13 +40,14 @@ public class Kmeans implements Algorithm<Table, String, Row>{
             for(int i = 0; i < clusters.size(); i++){   //Calcula el centroide de cada grupo
                 List<Row> cl = clusters.get(i);
                 centr.set(i, centrCalc(cl));
+                clusters.get(i).clear();                // Vacía el grupo para volver a calcularlo
             }
-            clusters.clear();                           // Vacía los grupos para volver a calcularlos
+
         }
     }
 
     public String estimate(Row r){
-        return "cluster-" + closestCluster(r);
+        return "cluster-" + (closestCluster(r) + 1);
     }
 
     private double euclideanDist(Row r1, Row r2) {
@@ -87,4 +88,8 @@ public class Kmeans implements Algorithm<Table, String, Row>{
         return ret;
     }
 
+
+    public List<Row> getCentr() {
+        return centr;
+    }
 }
