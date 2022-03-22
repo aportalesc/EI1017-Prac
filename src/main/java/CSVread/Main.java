@@ -12,12 +12,13 @@ public class Main {
         fila.add(2.0);
         fila.add(3.0);
         Row fila2 = new Row();
-        fila2.add(4.0);
-        fila2.add(5.0);
-        fila2.add(6.0);
-
+        fila2.add(1.0);
+        fila2.add(2.0);
+        fila2.add(3.0);
+        boolean pr = 1.0 == 1.0;
+        fila.equals(fila2);
         Table tabla = new Table();
-        System.out.println(tabla.getSize());
+        System.out.println(fila.equals(fila2));
         //tabla.add(fila);
         //tabla.add(fila2);
         //System.out.println(tabla);
@@ -73,7 +74,7 @@ public class Main {
         System.out.println(tl);
 
          */
-        TableWithLabels tl = CSV.readTableWithLabels("src/main/resources/iris.csv");
+        //TableWithLabels tl = CSV.readTableWithLabels("src/main/resources/iris.csv");
         //System.out.println(tl);
     }
 }

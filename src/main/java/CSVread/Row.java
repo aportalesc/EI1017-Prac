@@ -33,4 +33,18 @@ public class Row {
         }
         return ret;
     }
+
+    @Override
+    public boolean equals(Object obj){
+        if(this == obj)
+            return true;
+        if(!(obj instanceof Row))
+            return false;
+        Row otroRow = (Row) obj;
+        for(int i = 0; i < data.size(); i++){
+            if(data.get(i).compareTo(otroRow.data.get(i)) != 0)
+                return false;
+        }
+        return true;
+    }
 }

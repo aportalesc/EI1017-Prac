@@ -44,9 +44,9 @@ class KmeansTest {
         r4.add(12.0);
         l2.add(r4);
         l2.add(r3);
-        
-        assertEquals(l1,modelo.getCentr());
-        assertEquals(l2,modelo2.getCentr());
+
+        assertEquals(l1, modelo.getCentr());
+        assertEquals(l2, modelo2.getCentr());
 
     }
 
