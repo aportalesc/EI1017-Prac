@@ -2,24 +2,28 @@ package Algorithms;
 
 import CSVread.Row;
 import CSVread.Table;
+import DistanceAlgorithms.Distance;
+import DistanceAlgorithms.DistanceClient;
 import Statistics.Statistics;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Kmeans implements Algorithm<Table, String, Row>{
+public class Kmeans implements Algorithm<Table, String, Row>, DistanceClient {
 
     private int numberClusters;
     private int iterations;
     private long seed;
     private List<Row> centr;
+    private Distance distance;
 
-    public Kmeans(int numberClusters, int iterations, long seed){
+    public Kmeans(int numberClusters, int iterations, long seed, Distance distance){
         super();
         this.numberClusters = numberClusters;
         this.iterations = iterations;
         this.seed = seed;
+        this.distance = distance;
         this.centr = new ArrayList<>();
     }
 
@@ -33,7 +37,7 @@ public class Kmeans implements Algorithm<Table, String, Row>{
         for(int n = 0; n < iterations; n++){
             for(int i = 0; i < data.getSize(); i++){    //Asigna cada elemento al cluster más cercano
                 Row elem = data.getRowAt(i);
-                int ncluster = closestCluster(elem);
+                int ncluster = closestCluster(elem.getData());
                 clusters.get(ncluster).add(elem);
             }
 
@@ -42,28 +46,18 @@ public class Kmeans implements Algorithm<Table, String, Row>{
                 centr.set(i, centrCalc(cl));
                 clusters.get(i).clear();                // Vacía el grupo para volver a calcularlo
             }
-
         }
     }
 
     public String estimate(Row r){
-        return "cluster-" + (closestCluster(r) + 1);
+        return "cluster-" + (closestCluster(r.getData()) + 1);
     }
 
-    private double euclideanDist(Row r1, Row r2) {
-        double dist = 0;
-        for(int i = 0; i < r1.size(); i++)
-            dist += Math.pow(r1.getData().get(i) - r2.getData().get(i), 2);
-        dist = Math.sqrt(dist);
-        return dist;
-    }
-
-    private int closestCluster(Row elem){
+    private int closestCluster(List<Double> elem){
         double min = Double.MAX_VALUE;
-        double dist = 0.0;
         int ncluster = 0;
         for(int i = 0; i < centr.size(); i++){
-            dist = euclideanDist(centr.get(i), elem);
+            double dist = distance.calculateDistance(centr.get(i).getData(), elem);
             if(dist < min){
                 min = dist;
                 ncluster = i;
@@ -88,8 +82,11 @@ public class Kmeans implements Algorithm<Table, String, Row>{
         return ret;
     }
 
-
     public List<Row> getCentr() {
         return centr;
+    }
+
+    public void setDistance(Distance distance){
+        this.distance = distance;
     }
 }

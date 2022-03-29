@@ -2,6 +2,9 @@ package Algorithms;
 
 import CSVread.CSV;
 import CSVread.TableWithLabels;
+import DistanceAlgorithms.Distance;
+import DistanceAlgorithms.EuclideanDistance;
+import DistanceAlgorithms.ManhattanDistance;
 import Exceptions.EmptyTableException;
 import org.junit.jupiter.api.Test;
 
@@ -17,8 +20,9 @@ class KNNTest {
     void estimate() throws FileNotFoundException, EmptyTableException {
         TableWithLabels t = CSV.readTableWithLabels("src/main/resources/iris.csv");
         TableWithLabels t2 = new TableWithLabels();
-        KNN k = new KNN();
-        KNN k2 = new KNN();
+        Distance dist = new ManhattanDistance();
+        KNN k = new KNN(dist);
+        KNN k2 = new KNN(dist);
         k.train(t);
         List<Double> l = new ArrayList<>();
         l.add(5.8);

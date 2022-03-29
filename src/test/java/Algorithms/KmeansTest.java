@@ -4,6 +4,9 @@ import CSVread.CSV;
 import CSVread.Row;
 import CSVread.RowWithLabel;
 import CSVread.Table;
+import DistanceAlgorithms.Distance;
+import DistanceAlgorithms.EuclideanDistance;
+import DistanceAlgorithms.ManhattanDistance;
 import org.junit.jupiter.api.Test;
 
 import java.io.FileNotFoundException;
@@ -14,8 +17,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class KmeansTest {
 
-    Kmeans modelo = new Kmeans(3, 3, 1);
-    Kmeans modelo2 = new Kmeans(2, 3, 1);
+    Distance dist = new ManhattanDistance();
+    Kmeans modelo = new Kmeans(3, 3, 1, dist);
+    Kmeans modelo2 = new Kmeans(2, 3, 1, dist);
 
     KmeansTest() throws FileNotFoundException {
         Table t = CSV.readTable("src/main/resources/prueba2d.csv");

@@ -1,16 +1,21 @@
 package Algorithms;
 
+import CSVread.Row;
 import CSVread.TableWithLabels;
+import DistanceAlgorithms.Distance;
+import DistanceAlgorithms.DistanceClient;
 import Exceptions.EmptyTableException;
 
 import java.util.List;
 
-public class KNN implements Algorithm<TableWithLabels, String, List<Double>>{
+public class KNN implements Algorithm<TableWithLabels, String, List<Double>>, DistanceClient {
 
     private TableWithLabels data;
+    private Distance distance;
 
-    KNN(){
+    KNN(Distance distance){
         super();
+        this.distance = distance;
     }
 
     public void train(TableWithLabels data) throws EmptyTableException {
@@ -22,21 +27,18 @@ public class KNN implements Algorithm<TableWithLabels, String, List<Double>>{
 
     public String estimate(List<Double> sample){
         double min = Double.MAX_VALUE;
-        double calc = 0;
         String type = null;
         for(int i = 0; i < data.getSize(); i++){
-            for(int j = 0; j < data.getRowAt(i).size(); j++) {
-                double xi = data.getRowAt(i).getData().get(j);
-                calc += Math.pow(sample.get(j) - xi, 2);
-            }
-            calc = Math.sqrt(calc);
-
-            if(calc < min){
-                min = calc;
+            double dist = distance.calculateDistance(sample, data.getRowAt(i).getData());
+            if(dist < min){
+                min = dist;
                 type = data.getRowAt(i).getLabel();
             }
-            calc = 0;
         }
         return type;
+    }
+
+    public void setDistance(Distance distance){
+        this.distance = distance;
     }
 }

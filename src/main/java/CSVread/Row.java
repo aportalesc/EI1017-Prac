@@ -16,6 +16,10 @@ public class Row {
         return data;
     }
 
+    public void setData(List<Double> l){
+        data = l;
+    }
+
     public void add(Double number){
         data.add(number);
     }
