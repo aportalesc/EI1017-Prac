@@ -7,7 +7,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="practica1" />
-        <module name="ConversorTemperaturas" />
+        <module name="Practicas" />
         <module name="EI1017-Prac1" />
       </profile>
     </annotationProcessing>
