@@ -20,6 +20,14 @@ public class ControllerImplementation {
         this.view = view;
     }
 
+    public void setModel(ModelImplementation model) {
+        this.model = model;
+    }
+
+    public void setView(ViewImplementation view) {
+        this.view = view;
+    }
+
     public void loadData() throws FileNotFoundException {
        File f = fileChooser.showOpenDialog(null);
        if(f != null)

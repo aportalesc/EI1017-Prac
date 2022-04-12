@@ -19,9 +19,16 @@ public class ModelImplementation{
         this.controller = controller;
     }
 
+    public void setView(ViewImplementation view) {
+        this.view = view;
+    }
+
+    public void setController(ControllerImplementation controller) {
+        this.controller = controller;
+    }
+
     public void loadData(String fileName) throws FileNotFoundException {
         data = CSV.readTableWithLabels(fileName);
     }
-
-
+    
 }
