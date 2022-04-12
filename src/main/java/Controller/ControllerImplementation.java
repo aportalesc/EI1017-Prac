@@ -14,7 +14,7 @@ public class ControllerImplementation {
 
     private FileChooser fileChooser;
 
-    ControllerImplementation(ModelImplementation model, ViewImplementation view){
+    public ControllerImplementation(ModelImplementation model, ViewImplementation view){
         super();
         this.model = model;
         this.view = view;
@@ -28,9 +28,14 @@ public class ControllerImplementation {
         this.view = view;
     }
 
-    public void loadData() throws FileNotFoundException {
+    public void loadData()  {
        File f = fileChooser.showOpenDialog(null);
-       if(f != null)
-           model.loadData(f.getAbsolutePath());
+       if(f != null) {
+           try {
+               model.loadData(f.getAbsolutePath());
+           } catch (FileNotFoundException e) {
+               e.printStackTrace();
+           }
+       }
     }
 }
