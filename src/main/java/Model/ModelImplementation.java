@@ -1,5 +1,27 @@
 package Model;
 
-public class ModelImplementation implements Model{
-    private View vista; //Vista es un interface
+import CSVread.CSV;
+import CSVread.TableWithLabels;
+import Controller.ControllerImplementation;
+import View.ViewImplementation;
+
+import java.io.FileNotFoundException;
+
+public class ModelImplementation{
+    private ViewImplementation view;
+    private ControllerImplementation controller;
+
+    private TableWithLabels data;
+
+    ModelImplementation(ViewImplementation view, ControllerImplementation controller){
+        super();
+        this.view = view;
+        this.controller = controller;
+    }
+
+    public void loadData(String fileName) throws FileNotFoundException {
+        data = CSV.readTableWithLabels(fileName);
+    }
+
+
 }
