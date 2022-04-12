@@ -30,5 +30,5 @@ public class ModelImplementation{
     public void loadData(String fileName) throws FileNotFoundException {
         data = CSV.readTableWithLabels(fileName);
     }
-    
+
 }
