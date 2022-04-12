@@ -12,7 +12,7 @@ public class ViewImplementation {
     private ControllerImplementation controller;
     private Stage stage;
 
-    Button btnLoad = new Button("Cargar dataset");
+
 
     ViewImplementation(Stage stage, ModelImplementation model, ControllerImplementation controller){
         super();
@@ -23,6 +23,7 @@ public class ViewImplementation {
     }
 
     public void createGUI(){
+        Button btnLoad = new Button("Cargar dataset");
 
         btnLoad.setOnAction(e-> controller.loadData());
         Scene scene = new Scene(btnLoad, 400, 300);

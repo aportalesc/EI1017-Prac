@@ -18,6 +18,7 @@ public class ControllerImplementation {
         super();
         this.model = model;
         this.view = view;
+        this.fileChooser = new FileChooser();
     }
 
     public void setModel(ModelImplementation model) {
