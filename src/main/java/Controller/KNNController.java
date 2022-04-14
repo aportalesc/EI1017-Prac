@@ -1,31 +1,31 @@
 package Controller;
 
-import Model.ModelImplementation;
-import View.ViewImplementation;
+import Model.KNNModel;
+import View.KNNView;
 import javafx.stage.FileChooser;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 
-public class ControllerImplementation {
+public class KNNController {
 
-    private ModelImplementation model;
-    private ViewImplementation view;
+    private KNNModel model;
+    private KNNView view;
 
     private FileChooser fileChooser;
 
-    public ControllerImplementation(ModelImplementation model, ViewImplementation view){
+    public KNNController(KNNModel model, KNNView view){
         super();
         this.model = model;
         this.view = view;
         this.fileChooser = new FileChooser();
     }
 
-    public void setModel(ModelImplementation model) {
+    public void setModel(KNNModel model) {
         this.model = model;
     }
 
-    public void setView(ViewImplementation view) {
+    public void setView(KNNView view) {
         this.view = view;
     }
 

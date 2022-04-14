@@ -1,20 +1,22 @@
 package View;
 
-import Controller.ControllerImplementation;
-import Model.ModelImplementation;
+import Algorithms.KNN;
+import Controller.KNNController;
+import DistanceAlgorithms.Distance;
+import Model.KNNModel;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
-public class ViewImplementation {
+public class KNNView {
 
-    private ModelImplementation model;
-    private ControllerImplementation controller;
+    private KNNModel model;
+    private KNNController controller;
     private Stage stage;
 
 
 
-    ViewImplementation(Stage stage, ModelImplementation model, ControllerImplementation controller){
+    KNNView(Stage stage, KNNModel model, KNNController controller){
         super();
         this.stage = stage;
         this.model = model;
@@ -30,14 +32,13 @@ public class ViewImplementation {
         stage.setScene(scene);
         stage.show();
 
-
     }
 
-    public void setController(ControllerImplementation controller) {
+    public void setController(KNNController controller) {
         this.controller = controller;
     }
 
-    public void setModel(ModelImplementation model) {
+    public void setModel(KNNModel model) {
         this.model = model;
     }
 }

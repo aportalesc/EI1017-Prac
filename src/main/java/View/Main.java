@@ -1,7 +1,7 @@
 package View;
 
-import Controller.ControllerImplementation;
-import Model.ModelImplementation;
+import Controller.KNNController;
+import Model.KNNModel;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -12,9 +12,9 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        ViewImplementation view = new ViewImplementation(stage,null, null);
-        ModelImplementation model = new ModelImplementation(view);
-        ControllerImplementation controller = new ControllerImplementation(model, view);
+        KNNView view = new KNNView(stage,null, null);
+        KNNModel model = new KNNModel(view);
+        KNNController controller = new KNNController(model, view);
 
         view.setModel(model);
         view.setController(controller);
