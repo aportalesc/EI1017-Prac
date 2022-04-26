@@ -2,15 +2,15 @@ package Model;
 
 import CSVread.CSV;
 import CSVread.TableWithLabels;
-import View.KNNObserver;
 import View.KNNView;
 
 import java.io.FileNotFoundException;
 
+
 public class KNNModel {
 
     private KNNView view;
-    private KNNObserver observers;
+
 
     private TableWithLabels data;
 
@@ -26,13 +26,8 @@ public class KNNModel {
 
     public void loadData(String fileName) throws FileNotFoundException {
         data = CSV.readTableWithLabels(fileName);
-        for(KNNObserver obs : observers)
-            obs.newDataIsLoaded();
-
+        view.newDataIsLoaded();
     }
 
-    public void registerObserver(KNNObserver o){
-        observers.add(o);
-    }
 
 }
