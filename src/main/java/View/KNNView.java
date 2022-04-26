@@ -113,6 +113,7 @@ public class KNNView {
 
         scatterChart.getData().addAll(series);
         ObservableList axisNames = FXCollections.observableArrayList(model.getData().getHeaders());
+        axisNames.remove(axisNames.size() - 1);
         scatterChart.setTitle(axisNames.get(1).toString() + " vs. " + axisNames.get(0).toString());
         xAxis.setLabel(axisNames.get(0).toString());
         yAxis.setLabel(axisNames.get(1).toString());
