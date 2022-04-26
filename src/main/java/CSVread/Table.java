@@ -42,6 +42,10 @@ public class Table{
         return data.size();
     }
 
+    public List<String> getHeaders(){
+        return headers;
+    }
+
     @Override
     public String toString() {
         String ret = "";

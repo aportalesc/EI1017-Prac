@@ -39,4 +39,6 @@ public class KNNController {
            }
        }
     }
+
+    public void estimateParams(){}
 }

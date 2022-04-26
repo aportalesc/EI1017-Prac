@@ -1,5 +1,6 @@
 package View;
 
+import CSVread.RowWithLabel;
 import Controller.KNNController;
 import Model.KNNModel;
 import javafx.collections.FXCollections;
@@ -8,6 +9,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.ScatterChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
@@ -18,6 +20,11 @@ public class KNNView {
     private KNNModel model;
     private KNNController controller;
     private Stage stage;
+    private ScatterChart scatterChart;
+    private NumberAxis xAxis;
+    private NumberAxis yAxis;
+    private ComboBox xAxisCombo;
+    private ComboBox yAxisCombo;
 
 
 
@@ -37,40 +44,42 @@ public class KNNView {
 
         ObservableList distances = FXCollections.observableArrayList("EUCLIDEAN", "MANHATTAN")  ;
         ComboBox comboDistances = new ComboBox(distances);
+        comboDistances.getSelectionModel().selectFirst();
 
         TextField enterPoint = new TextField("New Point");
         TextField labelText = new TextField("Label");
         labelText.setDisable(true);
-        Button btnEstm = new Button("Estimate");
 
-        VBox vBoxRight = new VBox(btnLoad, comboDistances, enterPoint, labelText, btnEstm);
+        Button btnEstimate = new Button("Estimate");
+        //btnEstimate.setOnAction(e -> controller.estimateParams());
+
+        VBox vBoxRight = new VBox(btnLoad, comboDistances, enterPoint, labelText, btnEstimate);
         vBoxRight.setAlignment(Pos.CENTER_LEFT);
 
         BorderPane bp = new BorderPane();
         bp.setRight(vBoxRight);
 
         // Parte izquierda de la ventana
-        ObservableList AxisNames = FXCollections.observableArrayList("sepal length", "sepal width", "petal length", "petal width");
-        ComboBox yAxisCombo = new ComboBox(AxisNames);
+        yAxisCombo = new ComboBox();
 
         VBox vBoxLeft = new VBox(yAxisCombo);
         vBoxLeft.setAlignment(Pos.CENTER_LEFT);
         bp.setLeft(vBoxLeft);
 
         // Parte inferior de la ventana
-        ComboBox xAxisCombo = new ComboBox(AxisNames);
+        xAxisCombo = new ComboBox();
 
         VBox vBoxBottom = new VBox(xAxisCombo);
         vBoxBottom.setAlignment(Pos.CENTER);
         bp.setBottom(vBoxBottom);
 
         // Parte central de la ventana
-        NumberAxis xAxis = new NumberAxis();
+        xAxis = new NumberAxis();
         xAxis.setLabel("X");
-        NumberAxis yAxis = new NumberAxis();
+        yAxis = new NumberAxis();
         yAxis.setLabel("Y");
 
-        ScatterChart scatterChart = new ScatterChart(xAxis, yAxis);
+        scatterChart = new ScatterChart(xAxis, yAxis);
         bp.setCenter(scatterChart);
 
         // Creación de la escena
@@ -95,6 +104,22 @@ public class KNNView {
     }
 
     public void newDataIsLoaded(){
+
+        XYChart.Series series = new XYChart.Series();
+
+        for(int i = 0; i < model.getData().getSize(); i++){
+            series.getData().add(new XYChart.Data(model.getData().getRowAt(i).getData().get(0), model.getData().getRowAt(i).getData().get(1)));
+        }
+
+        scatterChart.getData().addAll(series);
+        ObservableList axisNames = FXCollections.observableArrayList(model.getData().getHeaders());
+        scatterChart.setTitle(axisNames.get(1).toString() + " vs. " + axisNames.get(0).toString());
+        xAxis.setLabel(axisNames.get(0).toString());
+        yAxis.setLabel(axisNames.get(1).toString());
+        xAxisCombo.setItems(axisNames);
+        xAxisCombo.getSelectionModel().selectFirst();
+        yAxisCombo.setItems(axisNames);
+        yAxisCombo.getSelectionModel().select(1);
 
     }
 }
