@@ -1,6 +1,5 @@
 package View;
 
-import CSVread.RowWithLabel;
 import Controller.KNNController;
 import Model.KNNModel;
 import javafx.collections.FXCollections;
@@ -14,6 +13,10 @@ import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 public class KNNView {
 
@@ -105,13 +108,30 @@ public class KNNView {
 
     public void newDataIsLoaded(){
 
-        XYChart.Series series = new XYChart.Series();
+        List<String> labels = new ArrayList<>();
+        List<XYChart.Series> series = new LinkedList<>();
 
-        for(int i = 0; i < model.getData().getSize(); i++){
-            series.getData().add(new XYChart.Data(model.getData().getRowAt(i).getData().get(0), model.getData().getRowAt(i).getData().get(1)));
+        for(int i = 0; i < model.getData().getSize(); i++) {
+            if(!labels.contains(model.getData().getRowAt(i).getLabel())) {
+                labels.add(model.getData().getRowAt(i).getLabel());
+                series.add(new XYChart.Series());
+            }
         }
 
-        scatterChart.getData().addAll(series);
+        for(int i = 0; i < model.getData().getSize(); i++){
+            String l = model.getData().getRowAt(i).getLabel();
+
+            for(int j = 0; j < series.size(); j++){
+                if(l.equals(labels.get(j)))
+
+                    series.get(j).getData().add(new XYChart.Data(model.getData().getRowAt(i).getData().get(0), model.getData().getRowAt(i).getData().get(1)));
+
+            }
+        }
+
+        for(int i = 0; i < series.size(); i++)
+            scatterChart.getData().addAll(series.get(i));
+
         ObservableList axisNames = FXCollections.observableArrayList(model.getData().getHeaders());
         axisNames.remove(axisNames.size() - 1);
         scatterChart.setTitle(axisNames.get(1).toString() + " vs. " + axisNames.get(0).toString());
