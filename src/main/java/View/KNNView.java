@@ -28,15 +28,13 @@ public class KNNView {
     private NumberAxis yAxis;
     private ComboBox xAxisCombo;
     private ComboBox yAxisCombo;
-
-
+    private TextField labelText;
 
     KNNView(Stage stage, KNNModel model, KNNController controller){
         super();
         this.stage = stage;
         this.model = model;
         this.controller = controller;
-
     }
 
     public void createGUI(){
@@ -48,33 +46,34 @@ public class KNNView {
         ObservableList distances = FXCollections.observableArrayList("EUCLIDEAN", "MANHATTAN")  ;
         ComboBox comboDistances = new ComboBox(distances);
         comboDistances.getSelectionModel().selectFirst();
+        comboDistances.setOnAction(e -> controller.setDistanceType(comboDistances.getSelectionModel().getSelectedItem()));
 
         TextField enterPoint = new TextField("New Point");
-        TextField labelText = new TextField("Label");
+        labelText = new TextField("Label");
         labelText.setDisable(true);
 
         Button btnEstimate = new Button("Estimate");
-        //btnEstimate.setOnAction(e -> controller.estimateParams());
+        btnEstimate.setOnAction(e -> controller.estimateParams(enterPoint.getText()));
 
         VBox vBoxRight = new VBox(btnLoad, comboDistances, enterPoint, labelText, btnEstimate);
         vBoxRight.setAlignment(Pos.CENTER_LEFT);
 
-        BorderPane bp = new BorderPane();
-        bp.setRight(vBoxRight);
+        BorderPane borderPane = new BorderPane();
+        borderPane.setRight(vBoxRight);
 
         // Parte izquierda de la ventana
         yAxisCombo = new ComboBox();
 
         VBox vBoxLeft = new VBox(yAxisCombo);
         vBoxLeft.setAlignment(Pos.CENTER_LEFT);
-        bp.setLeft(vBoxLeft);
+        borderPane.setLeft(vBoxLeft);
 
         // Parte inferior de la ventana
         xAxisCombo = new ComboBox();
 
         VBox vBoxBottom = new VBox(xAxisCombo);
         vBoxBottom.setAlignment(Pos.CENTER);
-        bp.setBottom(vBoxBottom);
+        borderPane.setBottom(vBoxBottom);
 
         // Parte central de la ventana
         xAxis = new NumberAxis();
@@ -83,10 +82,11 @@ public class KNNView {
         yAxis.setLabel("Y");
 
         scatterChart = new ScatterChart(xAxis, yAxis);
-        bp.setCenter(scatterChart);
+        scatterChart.setLegendVisible(false);
+        borderPane.setCenter(scatterChart);
 
         // Creación de la escena
-        Tab KNNTab = new Tab("KNN", bp);
+        Tab KNNTab = new Tab("KNN", borderPane);
 
         TabPane tabPane = new TabPane();
         tabPane.getTabs().add(KNNTab);
@@ -95,7 +95,6 @@ public class KNNView {
         Scene scene = new Scene(tabPane, 700, 500);
         stage.setScene(scene);
         stage.show();
-
     }
 
     public void setController(KNNController controller) {
@@ -120,12 +119,9 @@ public class KNNView {
 
         for(int i = 0; i < model.getData().getSize(); i++){
             String l = model.getData().getRowAt(i).getLabel();
-
             for(int j = 0; j < series.size(); j++){
                 if(l.equals(labels.get(j)))
-
                     series.get(j).getData().add(new XYChart.Data(model.getData().getRowAt(i).getData().get(0), model.getData().getRowAt(i).getData().get(1)));
-
             }
         }
 
@@ -141,6 +137,13 @@ public class KNNView {
         xAxisCombo.getSelectionModel().selectFirst();
         yAxisCombo.setItems(axisNames);
         yAxisCombo.getSelectionModel().select(1);
+    }
 
+    public void newPointIsEstimated(String type, List<Double> point){
+        labelText.setText(type);
+
+        XYChart.Series series = new XYChart.Series();
+        series.getData().add(new XYChart.Data(point.get(xAxisCombo.getSelectionModel().getSelectedIndex()), point.get(yAxisCombo.getSelectionModel().getSelectedIndex())));
+        scatterChart.getData().add(series);
     }
 }

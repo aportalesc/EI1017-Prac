@@ -13,7 +13,7 @@ public class KNN implements Algorithm<TableWithLabels, String, List<Double>>, Di
     private TableWithLabels data;
     private Distance distance;
 
-    KNN(Distance distance){
+    public KNN(Distance distance){
         super();
         this.distance = distance;
     }

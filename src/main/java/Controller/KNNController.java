@@ -40,5 +40,11 @@ public class KNNController {
        }
     }
 
-    public void estimateParams(){}
+    public void estimateParams(String estimatePoint){
+        model.estimateParams(estimatePoint);
+    }
+
+    public void setDistanceType(Object selectedItem) {
+        model.setDistanceType(selectedItem);
+    }
 }
