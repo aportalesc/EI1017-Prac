@@ -31,13 +31,8 @@ public class KNNController {
 
     public void loadData()  {
        File f = fileChooser.showOpenDialog(null);
-       if(f != null) {
-           try {
-               model.loadData(f.getAbsolutePath());
-           } catch (FileNotFoundException e) {
-               e.printStackTrace();
-           }
-       }
+       if(f != null)
+           model.loadData(f.getAbsolutePath());
     }
 
     public void estimateParams(String estimatePoint){

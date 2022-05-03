@@ -38,8 +38,12 @@ public class KNNModel {
     }
 
 
-    public void loadData(String fileName) throws FileNotFoundException {
-        data = CSV.readTableWithLabels(fileName);
+    public void loadData(String fileName) {
+        try {
+            data = CSV.readTableWithLabels(fileName);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
         view.newDataIsLoaded();
     }
 
@@ -72,4 +76,5 @@ public class KNNModel {
             dist = factory.getDistance(DistanceType.MANHATTAN);
         KNNAlgorithm.setDistance(dist);
     }
+
 }

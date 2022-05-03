@@ -24,11 +24,15 @@ public class KNNView {
     private KNNController controller;
     private Stage stage;
     private ScatterChart scatterChart;
+    private ObservableList axisNames;
     private NumberAxis xAxis;
     private NumberAxis yAxis;
     private ComboBox xAxisCombo;
     private ComboBox yAxisCombo;
     private TextField labelText;
+    private List<XYChart.Series> series;
+    private List<String> labels;
+    private List<List<List<Double>>> dataSeries;
 
     KNNView(Stage stage, KNNModel model, KNNController controller){
         super();
@@ -63,6 +67,7 @@ public class KNNView {
 
         // Parte izquierda de la ventana
         yAxisCombo = new ComboBox();
+        yAxisCombo.setOnAction(e -> setAxis(xAxisCombo.getSelectionModel().getSelectedIndex(), yAxisCombo.getSelectionModel().getSelectedIndex()));
 
         VBox vBoxLeft = new VBox(yAxisCombo);
         vBoxLeft.setAlignment(Pos.CENTER_LEFT);
@@ -70,6 +75,7 @@ public class KNNView {
 
         // Parte inferior de la ventana
         xAxisCombo = new ComboBox();
+        xAxisCombo.setOnAction(e -> setAxis(xAxisCombo.getSelectionModel().getSelectedIndex(), yAxisCombo.getSelectionModel().getSelectedIndex()));
 
         VBox vBoxBottom = new VBox(xAxisCombo);
         vBoxBottom.setAlignment(Pos.CENTER);
@@ -97,6 +103,18 @@ public class KNNView {
         stage.show();
     }
 
+    private void setAxis(int xIndex, int yIndex) {
+
+        if(xIndex < 0 || yIndex < 0)
+            return;
+
+        for(int i = 0; i < series.size(); i++){
+            for(int j = 0; j < dataSeries.get(i).size(); j++)
+                series.get(i).getData().set(j, new XYChart.Data(dataSeries.get(i).get(j).get(xIndex), dataSeries.get(i).get(j).get(yIndex)));
+        }
+
+    }
+
     public void setController(KNNController controller) {
         this.controller = controller;
     }
@@ -107,28 +125,32 @@ public class KNNView {
 
     public void newDataIsLoaded(){
 
-        List<String> labels = new ArrayList<>();
-        List<XYChart.Series> series = new LinkedList<>();
+        labels = new ArrayList<>();
+        series = new LinkedList<>();
+        dataSeries = new LinkedList<>();
 
         for(int i = 0; i < model.getData().getSize(); i++) {
             if(!labels.contains(model.getData().getRowAt(i).getLabel())) {
                 labels.add(model.getData().getRowAt(i).getLabel());
                 series.add(new XYChart.Series());
+                dataSeries.add(new LinkedList<>());
             }
         }
 
         for(int i = 0; i < model.getData().getSize(); i++){
             String l = model.getData().getRowAt(i).getLabel();
             for(int j = 0; j < series.size(); j++){
-                if(l.equals(labels.get(j)))
+                if(l.equals(labels.get(j))) {
                     series.get(j).getData().add(new XYChart.Data(model.getData().getRowAt(i).getData().get(0), model.getData().getRowAt(i).getData().get(1)));
+                    dataSeries.get(j).add(model.getData().getRowAt(i).getData());
+                }
             }
         }
 
         for(int i = 0; i < series.size(); i++)
             scatterChart.getData().addAll(series.get(i));
 
-        ObservableList axisNames = FXCollections.observableArrayList(model.getData().getHeaders());
+        axisNames = FXCollections.observableArrayList(model.getData().getHeaders());
         axisNames.remove(axisNames.size() - 1);
         scatterChart.setTitle(axisNames.get(1).toString() + " vs. " + axisNames.get(0).toString());
         xAxis.setLabel(axisNames.get(0).toString());
@@ -141,7 +163,10 @@ public class KNNView {
 
     public void newPointIsEstimated(String type, List<Double> point){
         labelText.setText(type);
+        addNewPoint(point);
+    }
 
+    public void addNewPoint(List<Double> point){
         XYChart.Series series = new XYChart.Series();
         series.getData().add(new XYChart.Data(point.get(xAxisCombo.getSelectionModel().getSelectedIndex()), point.get(yAxisCombo.getSelectionModel().getSelectedIndex())));
         scatterChart.getData().add(series);
