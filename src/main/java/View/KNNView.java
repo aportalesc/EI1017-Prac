@@ -30,9 +30,9 @@ public class KNNView {
     private ComboBox xAxisCombo;
     private ComboBox yAxisCombo;
     private TextField labelText;
-    private List<XYChart.Series> series;
-    private List<String> labels;
-    private List<List<List<Double>>> dataSeries;
+    private List<XYChart.Series> series;            // Contiene las series de puntos que se dibujan en la gráfica
+    private List<String> labels;                    // Contiene los nombres de las etiquetas de cada grupo
+    private List<List<List<Double>>> dataSeries;    // Contiene los puntos clasificados en las distintas series
 
     KNNView(Stage stage, KNNModel model, KNNController controller){
         super();
@@ -89,6 +89,7 @@ public class KNNView {
 
         scatterChart = new ScatterChart(xAxis, yAxis);
         scatterChart.setLegendVisible(false);
+        scatterChart.animatedProperty().set(false);
         borderPane.setCenter(scatterChart);
 
         // Creación de la escena
@@ -108,11 +109,14 @@ public class KNNView {
         if(xIndex < 0 || yIndex < 0)
             return;
 
+        scatterChart.setTitle(axisNames.get(yIndex).toString() + " vs. " + axisNames.get(xIndex).toString());
+        xAxis.setLabel(axisNames.get(xIndex).toString());
+        yAxis.setLabel(axisNames.get(yIndex).toString());
+
         for(int i = 0; i < series.size(); i++){
             for(int j = 0; j < dataSeries.get(i).size(); j++)
                 series.get(i).getData().set(j, new XYChart.Data(dataSeries.get(i).get(j).get(xIndex), dataSeries.get(i).get(j).get(yIndex)));
         }
-
     }
 
     public void setController(KNNController controller) {
@@ -163,12 +167,15 @@ public class KNNView {
 
     public void newPointIsEstimated(String type, List<Double> point){
         labelText.setText(type);
-        addNewPoint(point);
+        addNewPoint(point, type);
     }
 
-    public void addNewPoint(List<Double> point){
-        XYChart.Series series = new XYChart.Series();
-        series.getData().add(new XYChart.Data(point.get(xAxisCombo.getSelectionModel().getSelectedIndex()), point.get(yAxisCombo.getSelectionModel().getSelectedIndex())));
-        scatterChart.getData().add(series);
+    public void addNewPoint(List<Double> point, String type){
+        for(int i = 0; i < series.size(); i++){
+            if(type.equals(labels.get(i))){
+                series.get(i).getData().add(new XYChart.Data(point.get(xAxisCombo.getSelectionModel().getSelectedIndex()), point.get(yAxisCombo.getSelectionModel().getSelectedIndex())));
+                dataSeries.get(i).add(point);
+            }
+        }
     }
 }
