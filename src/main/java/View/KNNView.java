@@ -27,9 +27,11 @@ public class KNNView {
     private ObservableList axisNames;
     private NumberAxis xAxis;
     private NumberAxis yAxis;
+    private ComboBox comboDistances;
     private ComboBox xAxisCombo;
     private ComboBox yAxisCombo;
     private TextField labelText;
+    private TextField enterPoint;
     private List<XYChart.Series> series;            // Contiene las series de puntos que se dibujan en la gráfica
     private List<String> labels;                    // Contiene los nombres de las etiquetas de cada grupo
     private List<List<List<Double>>> dataSeries;    // Contiene los puntos clasificados en las distintas series
@@ -48,16 +50,17 @@ public class KNNView {
         btnLoad.setOnAction(e-> controller.loadData());
 
         ObservableList distances = FXCollections.observableArrayList("EUCLIDEAN", "MANHATTAN")  ;
-        ComboBox comboDistances = new ComboBox(distances);
+        comboDistances = new ComboBox(distances);
         comboDistances.getSelectionModel().selectFirst();
+        comboDistances.setDisable(true);
         comboDistances.setOnAction(e -> controller.setDistanceType(comboDistances.getSelectionModel().getSelectedItem()));
 
-        TextField enterPoint = new TextField("New Point");
+        enterPoint = new TextField("New Point");
         labelText = new TextField("Label");
         labelText.setDisable(true);
 
         Button btnEstimate = new Button("Estimate");
-        btnEstimate.setOnAction(e -> controller.estimateParams(enterPoint.getText()));
+        btnEstimate.setOnAction(e -> controller.estimateParams(enterPoint.getText(), true));
 
         VBox vBoxRight = new VBox(btnLoad, comboDistances, enterPoint, labelText, btnEstimate);
         vBoxRight.setAlignment(Pos.CENTER_LEFT);
@@ -150,7 +153,6 @@ public class KNNView {
                 }
             }
         }
-
         for(int i = 0; i < series.size(); i++)
             scatterChart.getData().addAll(series.get(i));
 
@@ -159,23 +161,34 @@ public class KNNView {
         scatterChart.setTitle(axisNames.get(1).toString() + " vs. " + axisNames.get(0).toString());
         xAxis.setLabel(axisNames.get(0).toString());
         yAxis.setLabel(axisNames.get(1).toString());
+        comboDistances.setDisable(false);
         xAxisCombo.setItems(axisNames);
         xAxisCombo.getSelectionModel().selectFirst();
         yAxisCombo.setItems(axisNames);
         yAxisCombo.getSelectionModel().select(1);
     }
 
-    public void newPointIsEstimated(String type, List<Double> point){
+    public void newPointIsEstimated(String type, List<Double> point, boolean esNuevo){
         labelText.setText(type);
-        addNewPoint(point, type);
+        if(esNuevo)
+            addNewPoint(point);
     }
 
-    public void addNewPoint(List<Double> point, String type){
-        for(int i = 0; i < series.size(); i++){
+    public void addNewPoint(List<Double> point){
+        /*for(int i = 0; i < series.size(); i++){
             if(type.equals(labels.get(i))){
                 series.get(i).getData().add(new XYChart.Data(point.get(xAxisCombo.getSelectionModel().getSelectedIndex()), point.get(yAxisCombo.getSelectionModel().getSelectedIndex())));
                 dataSeries.get(i).add(point);
             }
-        }
+        }*/
+        XYChart.Series series = new XYChart.Series();
+        series.getData().add(new XYChart.Data(point.get(xAxisCombo.getSelectionModel().getSelectedIndex()), point.get(yAxisCombo.getSelectionModel().getSelectedIndex())));
+        dataSeries.add(new LinkedList<>());
+        dataSeries.get(dataSeries.size() - 1).add(point);
+        scatterChart.getData().add(series);
+    }
+
+    public void reestimatePoint() {
+        controller.estimateParams(enterPoint.getText(), false);
     }
 }

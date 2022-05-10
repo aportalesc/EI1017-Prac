@@ -35,8 +35,8 @@ public class KNNController {
            model.loadData(f.getAbsolutePath());
     }
 
-    public void estimateParams(String estimatePoint){
-        model.estimateParams(estimatePoint);
+    public void estimateParams(String estimatePoint, boolean esNuevo){
+        model.estimateParams(estimatePoint, esNuevo);
     }
 
     public void setDistanceType(Object selectedItem) {

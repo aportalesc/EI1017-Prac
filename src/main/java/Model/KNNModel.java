@@ -44,6 +44,12 @@ public class KNNModel {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+
+        try {
+            KNNAlgorithm.train(data);
+        } catch (EmptyTableException e) {
+            e.printStackTrace();
+        }
         view.newDataIsLoaded();
     }
 
@@ -51,20 +57,20 @@ public class KNNModel {
         return data;
     }
 
-    public void estimateParams(String estimatePoint){
+    public void estimateParams(String estimatePoint, boolean esNuevo){
 
-        try {
-            KNNAlgorithm.train(data);
-        } catch (EmptyTableException e) {
-            e.printStackTrace();
-        }
         String[] newPoint = estimatePoint.split(",");
+        try{
+            Double.parseDouble(newPoint[0]);
+        } catch(NumberFormatException e){
+            return;
+        }
         List<Double> point = new LinkedList<>();
         for(int i = 0; i < newPoint.length; i++)
             point.add(Double.parseDouble(newPoint[i]));
 
         String type = KNNAlgorithm.estimate(point);
-        view.newPointIsEstimated(type, point);
+        view.newPointIsEstimated(type, point, esNuevo);
     }
 
 
@@ -75,6 +81,8 @@ public class KNNModel {
         else
             dist = factory.getDistance(DistanceType.MANHATTAN);
         KNNAlgorithm.setDistance(dist);
+
+        view.reestimatePoint();
     }
 
 }
