@@ -18,12 +18,8 @@ import java.util.List;
 public class KNNModel {
 
     private KNNView view;
-
     private Factory factory;
-
     private KNN KNNAlgorithm;
-
-
     private TableWithLabels data;
 
     public KNNModel(KNNView view){
@@ -36,7 +32,6 @@ public class KNNModel {
     public void setView(KNNView view) {
         this.view = view;
     }
-
 
     public void loadData(String fileName) {
         try {
@@ -73,7 +68,6 @@ public class KNNModel {
         view.newPointIsEstimated(type, point, esNuevo);
     }
 
-
     public void setDistanceType(Object selectedItem) {
         Distance dist;
         if(selectedItem.toString().equals("EUCLIDEAN"))
@@ -84,5 +78,4 @@ public class KNNModel {
 
         view.reestimatePoint();
     }
-
 }

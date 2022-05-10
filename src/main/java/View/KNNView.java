@@ -132,6 +132,21 @@ public class KNNView {
 
     public void newDataIsLoaded(){
 
+        initializeSeries();
+        drawSeries();
+        axisNames = FXCollections.observableArrayList(model.getData().getHeaders());
+        axisNames.remove(axisNames.size() - 1);
+        scatterChart.setTitle(axisNames.get(1).toString() + " vs. " + axisNames.get(0).toString());
+        xAxis.setLabel(axisNames.get(0).toString());
+        yAxis.setLabel(axisNames.get(1).toString());
+        comboDistances.setDisable(false);
+        xAxisCombo.setItems(axisNames);
+        xAxisCombo.getSelectionModel().selectFirst();
+        yAxisCombo.setItems(axisNames);
+        yAxisCombo.getSelectionModel().select(1);
+    }
+
+    private void initializeSeries(){
         labels = new ArrayList<>();
         series = new LinkedList<>();
         dataSeries = new LinkedList<>();
@@ -143,7 +158,9 @@ public class KNNView {
                 dataSeries.add(new LinkedList<>());
             }
         }
+    }
 
+    private void drawSeries(){
         for(int i = 0; i < model.getData().getSize(); i++){
             String l = model.getData().getRowAt(i).getLabel();
             for(int j = 0; j < series.size(); j++){
@@ -155,17 +172,6 @@ public class KNNView {
         }
         for(int i = 0; i < series.size(); i++)
             scatterChart.getData().addAll(series.get(i));
-
-        axisNames = FXCollections.observableArrayList(model.getData().getHeaders());
-        axisNames.remove(axisNames.size() - 1);
-        scatterChart.setTitle(axisNames.get(1).toString() + " vs. " + axisNames.get(0).toString());
-        xAxis.setLabel(axisNames.get(0).toString());
-        yAxis.setLabel(axisNames.get(1).toString());
-        comboDistances.setDisable(false);
-        xAxisCombo.setItems(axisNames);
-        xAxisCombo.getSelectionModel().selectFirst();
-        yAxisCombo.setItems(axisNames);
-        yAxisCombo.getSelectionModel().select(1);
     }
 
     public void newPointIsEstimated(String type, List<Double> point, boolean esNuevo){

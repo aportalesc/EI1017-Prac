@@ -11,7 +11,6 @@ public class KNNController {
 
     private KNNModel model;
     private KNNView view;
-
     private FileChooser fileChooser;
 
     public KNNController(KNNModel model, KNNView view){
