@@ -175,17 +175,11 @@ public class KNNView {
     }
 
     public void addNewPoint(List<Double> point){
-        /*for(int i = 0; i < series.size(); i++){
-            if(type.equals(labels.get(i))){
-                series.get(i).getData().add(new XYChart.Data(point.get(xAxisCombo.getSelectionModel().getSelectedIndex()), point.get(yAxisCombo.getSelectionModel().getSelectedIndex())));
-                dataSeries.get(i).add(point);
-            }
-        }*/
-        XYChart.Series series = new XYChart.Series();
-        series.getData().add(new XYChart.Data(point.get(xAxisCombo.getSelectionModel().getSelectedIndex()), point.get(yAxisCombo.getSelectionModel().getSelectedIndex())));
+        series.add(new  XYChart.Series());
+        series.get(series.size() - 1).getData().add(new XYChart.Data(point.get(xAxisCombo.getSelectionModel().getSelectedIndex()), point.get(yAxisCombo.getSelectionModel().getSelectedIndex())));
         dataSeries.add(new LinkedList<>());
         dataSeries.get(dataSeries.size() - 1).add(point);
-        scatterChart.getData().add(series);
+        scatterChart.getData().add(series.get(series.size() - 1));
     }
 
     public void reestimatePoint() {
