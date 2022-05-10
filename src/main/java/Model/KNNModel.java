@@ -54,6 +54,9 @@ public class KNNModel {
 
     public void estimateParams(String estimatePoint, boolean esNuevo){
 
+        if(data == null)
+            return;
+
         String[] newPoint = estimatePoint.split(",");
         try{
             Double.parseDouble(newPoint[0]);
